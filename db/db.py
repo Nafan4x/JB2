@@ -20,13 +20,28 @@ class Database:
     async def create_tables(self):
         query = """
             CREATE TABLE IF NOT EXISTS users (
-                id BIGINT PRIMARY KEY,
-                type VARCHAR(50),
-                name VARCHAR(100),
-                avatar_path VARCHAR(255),
-                gender VARCHAR(20),
-                state VARCHAR(50)
-            );
+            id BIGINT PRIMARY KEY,
+            type VARCHAR(50),
+            name VARCHAR(100),
+            avatar_path VARCHAR(255),
+            gender VARCHAR(20),
+            state VARCHAR(50),
+
+            -- Новые поля
+            stamina INT DEFAULT 0,              -- выносливость
+            agility INT DEFAULT 0,              -- ловкость
+            intelligence INT DEFAULT 0,         -- интеллект
+
+            cash_balance BIGINT DEFAULT 0,      -- наличные деньги
+            bank_balance BIGINT DEFAULT 0,      -- деньги в банке
+            expected_income BIGINT DEFAULT 0,   -- ожидаемый доход
+
+            current_actions TEXT,               -- действия на этом ходу
+
+            has_premium BOOLEAN DEFAULT FALSE,  -- наличие премиума
+            renacoin_balance BIGINT DEFAULT 0,  -- баланс ренакоинов
+            personal_security TEXT              -- личная охрана (можно JSON, если составная)
+        );
             """
         async with self.pool.acquire() as conn:
             await conn.execute(query)

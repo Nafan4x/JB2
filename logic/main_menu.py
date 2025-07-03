@@ -18,7 +18,6 @@ input_strs = ["Статистика", "Бизнес", "Город", "Дейст�
 async def main_menu(fsm, message_text):
     if fsm.state == "main_menu":
         is_checked = await input_check(message_text, 15, input_strs)
-        print(is_checked)
         if not is_checked:
             return {"text": "Неизвестная команда"}
         if message_text == "Статистика":
