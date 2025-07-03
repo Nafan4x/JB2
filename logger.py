@@ -1,4 +1,5 @@
-import logging
+import os
+import logging  # не забудьте импортировать logging, если ещё не импортирован
 
 
 class CustomLogger:
@@ -21,8 +22,12 @@ class CustomLogger:
             ch.setFormatter(formatter)
             self.logger.addHandler(ch)
 
+            # Убедиться, что папка для логов существует
+            log_dir = "logging"
+            os.makedirs(log_dir, exist_ok=True)
+
             # Файловый хендлер
-            fh = logging.FileHandler(f"logging\{log_file}", encoding="utf-8")
+            fh = logging.FileHandler(os.path.join(log_dir, log_file), encoding="utf-8")
             fh.setLevel(file_level)  # уровень для файла
             fh.setFormatter(formatter)
             self.logger.addHandler(fh)
